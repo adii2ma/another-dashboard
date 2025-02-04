@@ -22,9 +22,9 @@ const FloatingDock = () => {
   const menuItems = [
     { icon: <Home size={24} />, text: "Dashboard", href: "/dashboard" },
     { icon: <Upload size={24} />, text: "Upload", href: "/dashboard/upload" },
-    { icon: <Search size={24} />, text: "Data Analysis", href: "/dashboard/dataanalysis" },
-    { icon: <Shield size={24} />, text: "Protect", href: "/protection" },
-    { icon: <Settings size={24} />, text: "Settings", href: "/settings" },
+    { icon: <Search size={24} />, text: "Data Analysis", href: "/dashboard " },
+    { icon: <Shield size={24} />, text: "Protect", href: "/dashboard" },
+    { icon: <Settings size={24} />, text: "Settings", href: "/dashboard/settings" },
   ]
 
   return (
