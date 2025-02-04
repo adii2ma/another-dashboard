@@ -60,7 +60,7 @@ export default function Dashboard() {
 
       try {
         setIsLoading(true)
-        const baseUrl = "http://localhost:8080/dashboard/videos/"
+        const baseUrl = "http://4.240.103.202:8080/dashboard/videos/"
         const fullUrl = baseUrl + (session.user.email)
 
         const res = await fetch(fullUrl, {
