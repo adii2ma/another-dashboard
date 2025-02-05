@@ -2,9 +2,12 @@
 
 import { type ReactNode, useEffect, useState } from "react"
 import dynamic from "next/dynamic"
-import { BoxReveal } from "./components/ui/box-reveal"
+import { BoxReveal as RawBoxReveal } from "./components/ui/box-reveal"
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card"
 import Link from "next/link"
+
+// Cast BoxReveal so it accepts a className prop
+const BoxReveal = RawBoxReveal as React.ComponentType<{ className?: string; children: ReactNode }>
 
 const ScrollProgress = dynamic(
   () => import("./components/ui/scroll-progress").then((mod) => ({ default: mod.ScrollProgress })),
@@ -21,10 +24,11 @@ const Meteors = dynamic(() => import("./components/ui/meteors").then((mod) => ({
   loading: () => null,
 })
 
-const IconCloud = dynamic(() => import("./components/ui/icon-cloud").then((mod) => ({ default: mod.IconCloud })), {
-  ssr: false,
-  loading: () => null,
-})
+// Adjusted IconCloud dynamic import casting to accept a className prop
+const IconCloud = dynamic(
+  () => import("./components/ui/icon-cloud").then((mod) => ({ default: mod.IconCloud })),
+  { ssr: false, loading: () => null }
+) as unknown as React.ComponentType<{ className?: string }>
 
 const BorderBeam = dynamic(() => import("./components/ui/border-beam").then((mod) => ({ default: mod.BorderBeam })), {
   ssr: false,
@@ -89,7 +93,7 @@ export default function Home() {
       {/* Section 1: Hero with Globe */}
       <section className="min-h-screen flex flex-col items-center justify-center relative py-16">
         <div className="relative w-full max-w-2xl aspect-square">
-          <h1 className="text-8xl md:text-9xl font-jakarta font-bold mb-8 text-center absolute top-0 left-1/2 transform -translate-x-1/2  z-10">
+          <h1 className="text-8xl md:text-9xl font-jakarta font-bold mb-8 text-center absolute top-0 left-1/2 transform -translate-x-1/2 z-10">
             <span className="text-white">M</span>
             <span className="text-black">ARIN</span>
             <span className="text-white">E</span>
@@ -114,7 +118,9 @@ export default function Home() {
               Even if they're edited, cropped, or re-uploaded. We detect 85%+ matches.
             </FeatureCard>
 
-            <FeatureCard title="Instant Alerts">Get notified immediately with links to pirated content.</FeatureCard>
+            <FeatureCard title="Instant Alerts">
+              Get notified immediately with links to pirated content.
+            </FeatureCard>
 
             <FeatureCard title="Take Back Control">
               Download ready-to-use reports for takedowns or legal action.
@@ -181,9 +187,13 @@ export default function Home() {
               We scan YouTube, social media, torrents, and shady corners of the web.
             </StepCard>
 
-            <StepCard title="3. AI Does the Work">Our AI compares every frame, audio clip, and watermark.</StepCard>
+            <StepCard title="3. AI Does the Work">
+              Our AI compares every frame, audio clip, and watermark.
+            </StepCard>
 
-            <StepCard title="4. You Take Action">Get proof to shut down pirates—fast.</StepCard>
+            <StepCard title="4. You Take Action">
+              Get proof to shut down pirates—fast.
+            </StepCard>
           </div>
         </div>
       </section>
@@ -194,14 +204,10 @@ export default function Home() {
         <div className="text-center relative z-10">
           <h2 className="text-5xl md:text-7xl font-jakarta font-bold mb-8">Try it out</h2>
           <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300">
-            <Link
-          href="/auth/signin">
-            Get Started
-            </Link>
+            <Link href="/auth/signin">Get Started</Link>
           </button>
         </div>
       </section>
     </main>
   )
 }
-
