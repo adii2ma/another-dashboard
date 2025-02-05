@@ -113,7 +113,9 @@ export default function Dashboard() {
     return "Good evening"
   }
 
-  const filteredUploads = uploads.filter((upload) => upload.title.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredUploads = uploads.filter((upload) =>
+    upload.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
   const triggerCrawl = async (url: string) => {
     let normalizedUrl = url.trim()
@@ -251,17 +253,18 @@ export default function Dashboard() {
                     <FileVideo className="mr-2 text-[#778DA9]" />
                     {upload.title}
                   </CardTitle>
-                  {upload.flagged && upload.active_matches && upload.active_matches.length > 0 && (
-                    <Badge variant="destructive" className="text-xs">
-                      Flagged on {upload.active_matches?.[0]?.video_url}
-                    </Badge>
-                  )}
+                  {/* Badge based on flagged state */}
+                  <Badge variant={upload.flagged ? "destructive" : "default"} className="text-xs">
+                    {upload.flagged ? "Flagged" : "Clean"}
+                  </Badge>
                 </CardHeader>
                 <CardContent className="pb-2">
                   <CardDescription className="text-[#778DA9] text-xs">
                     Uploaded on {new Date(upload.created_at).toLocaleDateString()}
                   </CardDescription>
-                  <p className="text-[#E0E1DD] text-sm mt-2">{upload.description || "No description provided."}</p>
+                  <p className="text-[#E0E1DD] text-sm mt-2">
+                    {upload.description || "No description provided."}
+                  </p>
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <Dialog>
@@ -302,4 +305,3 @@ export default function Dashboard() {
     </div>
   )
 }
-
