@@ -22,7 +22,7 @@ const FloatingDock = () => {
   const menuItems = [
     { icon: <Home size={24} />, text: "Dashboard", href: "/dashboard" },
     { icon: <Upload size={24} />, text: "Upload", href: "/dashboard/upload" },
-    { icon: <Search size={24} />, text: "Data Analysis", href: "/dashboard " },
+    { icon: <Search size={24} />, text: "Data Analysis", href: "/dashboard" },
     { icon: <Shield size={24} />, text: "Protect", href: "/dashboard" },
     { icon: <Settings size={24} />, text: "Settings", href: "/dashboard/settings" },
   ]
@@ -36,10 +36,11 @@ const FloatingDock = () => {
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
         <motion.div
-          className="p-2 flex justify-center items-center gap-2 rounded-full shadow-lg"
+          className="p-2 flex justify-center items-center gap-2 rounded-full shadow-lg border-2 border-[#E0E1DD]/20"
           style={{
-            backgroundColor: "rgba(0, 138, 144, 0.2)",
-            backdropFilter: "blur(10px)",
+            backgroundColor: "rgba(65, 90, 119, 0.95)",
+            backdropFilter: "blur(12px)",
+            boxShadow: "0 8px 32px rgba(13, 27, 42, 0.2)",
           }}
         >
           {menuItems.map((item, index) => (
@@ -77,13 +78,15 @@ const DockItem = ({
   return (
     <Link href={href} className="relative group" onMouseEnter={() => onHover(text)} onMouseLeave={() => onHover(null)}>
       <motion.div
-        className={`flex flex-col items-center justify-center mx-auto p-2 rounded-full transition-colors duration-200 ${
-          isActive ? "bg-[#006A70] text-white" : "text-white/70 hover:bg-[#006A70] hover:text-white"
+        className={`flex flex-col items-center justify-center mx-auto p-2 rounded-full transition-all duration-300 ${
+          isActive
+            ? "bg-[#778DA9] text-[#0D1B2A] shadow-lg shadow-[#0D1B2A]/20"
+            : "text-[#E0E1DD] hover:bg-[#778DA9] hover:text-[#0D1B2A]"
         }`}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         style={{
-          opacity: isHovered ? 1 : 0.4, // More dull when not hovered
+          opacity: isHovered ? 1 : 0.85,
         }}
       >
         {icon}
@@ -91,7 +94,7 @@ const DockItem = ({
       <AnimatePresence>
         {isHovered && (
           <motion.div
-            className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-[#006A70] text-white px-2 py-1 rounded text-xs whitespace-nowrap"
+            className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-[#778DA9] text-[#0D1B2A] px-3 py-1.5 rounded-md text-sm font-medium shadow-lg border border-[#E0E1DD]/20"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
