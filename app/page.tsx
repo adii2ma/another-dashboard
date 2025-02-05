@@ -2,8 +2,9 @@
 
 import { type ReactNode, useEffect, useState } from "react"
 import dynamic from "next/dynamic"
-import { MagicCard } from "./components/ui/magic-card"
 import { BoxReveal } from "./components/ui/box-reveal"
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card"
+import Link from "next/link"
 
 const ScrollProgress = dynamic(
   () => import("./components/ui/scroll-progress").then((mod) => ({ default: mod.ScrollProgress })),
@@ -11,6 +12,11 @@ const ScrollProgress = dynamic(
 )
 
 const Globe = dynamic(() => import("./components/ui/globe").then((mod) => ({ default: mod.Globe })), {
+  ssr: false,
+  loading: () => null,
+})
+
+const Meteors = dynamic(() => import("./components/ui/meteors").then((mod) => ({ default: mod.Meteors })), {
   ssr: false,
   loading: () => null,
 })
@@ -36,10 +42,14 @@ interface FeatureCardProps {
 }
 
 const FeatureCard = ({ title, children }: FeatureCardProps) => (
-  <MagicCard className="bg-[#0D1B2A] border border-[#415A77] p-6 rounded-xl h-full">
-    <h3 className="text-xl font-bold mb-2">{title}</h3>
-    <p className="text-sm leading-relaxed">{children}</p>
-  </MagicCard>
+  <Card className="bg-[#0D1B2A] border border-[#415A77]">
+    <CardHeader>
+      <CardTitle className="text-xl font-bold text-white underline">{title}</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-sm leading-relaxed text-gray-300">{children}</p>
+    </CardContent>
+  </Card>
 )
 
 interface StepCardProps {
@@ -50,10 +60,14 @@ interface StepCardProps {
 const StepCard = ({ title, children }: StepCardProps) => (
   <div className="relative">
     <BorderBeam />
-    <div className="p-6 rounded-xl h-full bg-[#0D1B2A] border border-[#415A77]">
-      <h3 className="text-lg font-bold mb-2">{title}</h3>
-      <p className="text-sm leading-relaxed">{children}</p>
-    </div>
+    <Card className="bg-[#0D1B2A] border border-[#415A77]">
+      <CardHeader>
+        <CardTitle className="text-lg font-bold text-white underline">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm leading-relaxed text-gray-300">{children}</p>
+      </CardContent>
+    </Card>
   </div>
 )
 
@@ -74,20 +88,24 @@ export default function Home() {
 
       {/* Section 1: Hero with Globe */}
       <section className="min-h-screen flex flex-col items-center justify-center relative py-16">
-        <h1 className="text-7xl md:text-8xl font-jakarta font-bold mb-16 text-center">MARINES</h1>
-        <div className="w-full max-w-2xl aspect-square">
+        <div className="relative w-full max-w-2xl aspect-square">
+          <h1 className="text-8xl md:text-9xl font-jakarta font-bold mb-8 text-center absolute top-0 left-1/2 transform -translate-x-1/2  z-10">
+            <span className="text-white">M</span>
+            <span className="text-black">ARIN</span>
+            <span className="text-white">E</span>
+          </h1>
           <Globe />
         </div>
       </section>
 
       {/* Section 2: Protection Features */}
-      <section className="min-h-screen flex items-center px-4 md:px-16 py-16">
+      <section className="py-16 px-4 md:px-16">
         <div className="flex flex-col md:flex-row w-full gap-8">
-          <div className="md:w-1/2 text-center md:text-left">
+          <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
             <h2 className="text-4xl md:text-6xl font-jakarta font-bold leading-tight mb-8">
               Protect your content
               <br />
-              from thieves
+              from Pirates
             </h2>
           </div>
 
@@ -110,18 +128,18 @@ export default function Home() {
       </section>
 
       {/* Section 3: Benefits */}
-      <section className="min-h-screen flex items-center px-4 md:px-16 py-16">
-        <div className="flex flex-col md:flex-row w-full gap-8">
-          <div className="md:w-1/2 flex items-center justify-center mb-8 md:mb-0">
+      <section className="py-16 px-4 md:px-16">
+        <div className="flex flex-col md:flex-row w-full gap-8 items-center">
+          <div className="md:w-1/2 mb-8 md:mb-0">
             <IconCloud className="w-full h-full" />
           </div>
 
-          <div className="md:w-1/2 p-4 md:p-8">
+          <div className="md:w-1/2">
             <BoxReveal className="bg-[#0D1B2A] border border-[#415A77] rounded-xl p-6">
               <div className="space-y-8">
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Why You'll Love This</h3>
-                  <p className="text-sm">
+                  <p className="text-sm text-gray-300">
                     Pirates cost creators billions yearly. Instead of wasting hours searching, let us do the dirty work.
                     Focus on creating—we'll handle the policing.
                   </p>
@@ -129,7 +147,7 @@ export default function Home() {
 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Who Needs This?</h3>
-                  <p className="text-sm">
+                  <p className="text-sm text-gray-300">
                     Perfect for creators (YouTubers, filmmakers, educators), businesses protecting training
                     videos/demos, and teams fighting piracy legally.
                   </p>
@@ -137,7 +155,7 @@ export default function Home() {
 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Your Time & Money, Protected</h3>
-                  <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <ul className="list-disc pl-5 space-y-2 text-sm text-gray-300">
                     <li>No more manual searches—automate the hunt</li>
                     <li>Stop losing revenue to copycats</li>
                     <li>Protect your brand's reputation</li>
@@ -151,26 +169,37 @@ export default function Home() {
       </section>
 
       {/* Section 4: Process Steps */}
-      <section className="min-h-screen flex items-center justify-center px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full p-4 md:p-16">
-          <StepCard title="1. Upload Your Video">
-            Securely share your original content (like your private Netflix, but better!).
-          </StepCard>
+      <section className="py-16 px-4 md:px-16">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-jakarta font-bold text-center mb-12">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <StepCard title="1. Upload Your Video">
+              Securely share your original content (like your private Netflix, but better!).
+            </StepCard>
 
-          <StepCard title="2. We Play Detective">
-            We scan YouTube, social media, torrents, and shady corners of the web.
-          </StepCard>
+            <StepCard title="2. We Play Detective">
+              We scan YouTube, social media, torrents, and shady corners of the web.
+            </StepCard>
 
-          <StepCard title="AI Does the Work">Our AI compares every frame, audio clip, and watermark.</StepCard>
+            <StepCard title="3. AI Does the Work">Our AI compares every frame, audio clip, and watermark.</StepCard>
 
-          <StepCard title="You Take Action">Get proof to shut down pirates—fast.</StepCard>
+            <StepCard title="4. You Take Action">Get proof to shut down pirates—fast.</StepCard>
+          </div>
         </div>
       </section>
 
       {/* Section 5: CTA */}
       <section className="min-h-screen flex items-center justify-center relative py-16">
-        <Ripple className="absolute inset-0" />
-        <h2 className="text-5xl md:text-7xl font-jakarta font-bold relative z-10">Try it out</h2>
+        <Meteors number={20} />
+        <div className="text-center relative z-10">
+          <h2 className="text-5xl md:text-7xl font-jakarta font-bold mb-8">Try it out</h2>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300">
+            <Link
+          href="/auth/signin">
+            Get Started
+            </Link>
+          </button>
+        </div>
       </section>
     </main>
   )
