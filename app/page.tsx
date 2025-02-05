@@ -109,7 +109,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-6xl font-jakarta font-bold leading-tight mb-8">
               Protect your content
               <br />
-              from Pirates
+              from pirates
             </h2>
           </div>
 
