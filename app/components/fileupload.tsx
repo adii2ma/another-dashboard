@@ -41,7 +41,7 @@ export default function FileUpload() {
       formData.append("name", name)
       formData.append("description", description)
 
-      const response = await fetch("https://acm.today:8080", {
+      const response = await fetch("https://acm.today:8080/upload", {
         method: "POST",
         body: formData,
       })
