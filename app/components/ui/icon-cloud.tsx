@@ -37,10 +37,11 @@ export function IconCloud({ icons, images }: IconCloudProps) {
     startTime: number;
     duration: number;
   } | null>(null);
-  const animationFrameRef = useRef<number>();
-  const rotationRef = useRef(rotation);
-  const iconCanvasesRef = useRef<HTMLCanvasElement[]>([]);
-  const imagesLoadedRef = useRef<boolean[]>([]);
+  const animationFrameRef = useRef<number | null>(null);  
+const rotationRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });  
+const iconCanvasesRef = useRef<HTMLCanvasElement[]>([]);  
+const imagesLoadedRef = useRef<boolean[]>([]);  
+
 
   // Create icon canvases once when icons/images change
   useEffect(() => {
